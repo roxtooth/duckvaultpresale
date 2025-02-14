@@ -1,16 +1,15 @@
-import "@/styles/globals.css";
-import { Web3Provider, wagmiClient } from "@/context/Web3Context";
 import { WagmiConfig } from "wagmi";
-import { AppKitProvider } from "@reown/appkit"; // ✅ Correct Import
+import { Web3Provider, wagmiClient } from "@/context/Web3Context";
+import { AuthProvider } from "@reown/appkit"; // ✅ Updated Import
 
 export default function App({ Component, pageProps }) {
   return (
-    <Web3Provider>
-      <WagmiConfig config={wagmiClient}>
-        <AppKitProvider> 
+    <WagmiConfig client={wagmiClient}>
+      <AuthProvider>
+        <Web3Provider>
           <Component {...pageProps} />
-        </AppKitProvider>
-      </WagmiConfig>
-    </Web3Provider>
+        </Web3Provider>
+      </AuthProvider>
+    </WagmiConfig>
   );
 }
