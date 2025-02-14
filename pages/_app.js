@@ -1,14 +1,16 @@
-import "../styles/globals.css";
-import { Web3Provider } from "../context/Web3Context";
-import Navbar from "../components/Navbar";
+import "@/styles/globals.css";
+import { Web3Provider, wagmiClient } from "@/context/Web3Context";
+import { WagmiConfig } from "wagmi";
+import { AppKitProvider } from "@reown/appkit"; // ✅ Correct Import
 
-function MyApp({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   return (
     <Web3Provider>
-      <Navbar />
-      <Component {...pageProps} />
+      <WagmiConfig config={wagmiClient}>
+        <AppKitProvider> 
+          <Component {...pageProps} />
+        </AppKitProvider>
+      </WagmiConfig>
     </Web3Provider>
   );
 }
-
-export default MyApp;
