@@ -18,6 +18,38 @@ const getProvider = async () => {
   }
 };
 
+// ✅ Ensured getPresaleStage function is properly exported
+export const getPresaleStage = async () => {
+  try {
+    const provider = await getProvider();
+    if (!provider) return null;
+
+    const contract = new ethers.Contract(contractAddress, contractABI, provider);
+    return await contract.getCurrentStage();
+  } catch (err) {
+    console.error("Error fetching presale stage:", err);
+    return null;
+  }
+};
+
+// ✅ Ensured getTokenSoldPercentage function is properly exported
+export const getTokenSoldPercentage = async () => {
+  try {
+    const provider = await getProvider();
+    if (!provider) return 0;
+
+    const contract = new ethers.Contract(contractAddress, contractABI, provider);
+    const totalSold = await contract.totalTokensSold();
+    const totalSupply = 90000000;
+    
+    return (totalSold / totalSupply) * 100;
+  } catch (err) {
+    console.error("Error fetching token sale progress:", err);
+    return 0;
+  }
+};
+
+// ✅ Fixed buyTokens function to use the correct presale pricing
 export const buyTokens = async (amount) => {
   try {
     const provider = await getProvider();
@@ -29,7 +61,7 @@ export const buyTokens = async (amount) => {
     const signer = provider.getSigner();
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    // ✅ Ensure the correct presale stage price is used
+    // ✅ Get current presale stage to determine price
     const presaleStage = await contract.getCurrentStage();
     let pricePerToken;
 
@@ -43,7 +75,7 @@ export const buyTokens = async (amount) => {
 
     const totalCost = pricePerToken.mul(amount);
     
-    // ✅ Ensure the transaction is properly formatted
+    // ✅ Ensuring correct transaction formatting
     const tx = await contract.buyTokens(amount, { value: totalCost });
     await tx.wait();
 
