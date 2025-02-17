@@ -6,8 +6,12 @@ export default function Navbar() {
 
   useEffect(() => {
     async function fetchWallet() {
-      const { address } = await connectWallet();
-      setWalletAddress(address);
+      const walletData = await connectWallet();
+      if (walletData && walletData.address) {
+        setWalletAddress(walletData.address);
+      } else {
+        console.error("No wallet address found.");
+      }
     }
     fetchWallet();
   }, []);
