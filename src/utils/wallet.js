@@ -11,11 +11,13 @@ export const connectWallet = async () => {
     const walletProvider = await reownAppKit.open();
 
     if (!walletProvider) {
-      console.error("Wallet provider is undefined.");
+      console.error("Wallet provider is undefined. Please retry.");
       return { address: null };
     }
 
-    const provider = new ethers.providers.Web3Provider(walletProvider);
+    // ✅ Ensure WalletConnect is correctly initialized
+    const provider = new ethers.providers.Web3Provider(walletProvider, "any");
+
     const signer = provider.getSigner();
     const address = await signer.getAddress();
 
