@@ -7,12 +7,10 @@ const contractABI = [ /* Paste ABI here */ ];
 const getProvider = async () => {
   try {
     const walletProvider = await reownAppKit.open();
-    
     if (!walletProvider) {
-      console.error("Wallet provider is undefined. Please connect your wallet.");
+      console.error("Wallet provider is undefined. Please retry.");
       return null;
     }
-
     return new ethers.providers.Web3Provider(walletProvider);
   } catch (err) {
     console.error("Error fetching provider:", err);
@@ -20,50 +18,38 @@ const getProvider = async () => {
   }
 };
 
-export const getPresaleStage = async () => {
-  try {
-    const provider = await getProvider();
-    if (!provider) return null;
-
-    const contract = new ethers.Contract(contractAddress, contractABI, provider);
-    return await contract.getCurrentStage();
-  } catch (err) {
-    console.error("Error fetching presale stage:", err);
-    return null;
-  }
-};
-
-export const getTokenSoldPercentage = async () => {
-  try {
-    const provider = await getProvider();
-    if (!provider) return 0;
-
-    const contract = new ethers.Contract(contractAddress, contractABI, provider);
-    const totalSold = await contract.totalTokensSold();
-    const totalSupply = 90000000;
-    
-    return (totalSold / totalSupply) * 100;
-  } catch (err) {
-    console.error("Error fetching token sale progress:", err);
-    return 0;
-  }
-};
-
 export const buyTokens = async (amount) => {
   try {
     const provider = await getProvider();
-    if (!provider) return;
+    if (!provider) {
+      alert("Wallet not connected. Please connect your wallet.");
+      return;
+    }
 
     const signer = provider.getSigner();
     const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    const pricePerToken = 0.0001; // Adjust based on stage
-    const totalCost = ethers.utils.parseEther((amount * pricePerToken).toString());
+    // ✅ Ensure the correct presale stage price is used
+    const presaleStage = await contract.getCurrentStage();
+    let pricePerToken;
 
+    if (presaleStage == 1) pricePerToken = ethers.utils.parseEther("0.0001");
+    else if (presaleStage == 2) pricePerToken = ethers.utils.parseEther("0.0002");
+    else if (presaleStage == 3) pricePerToken = ethers.utils.parseEther("0.0003");
+    else {
+      alert("Presale is not active.");
+      return;
+    }
+
+    const totalCost = pricePerToken.mul(amount);
+    
+    // ✅ Ensure the transaction is properly formatted
     const tx = await contract.buyTokens(amount, { value: totalCost });
     await tx.wait();
+
     alert("Purchase Successful!");
   } catch (err) {
     console.error("Error purchasing tokens:", err);
+    alert("Transaction failed. Check console for details.");
   }
 };
