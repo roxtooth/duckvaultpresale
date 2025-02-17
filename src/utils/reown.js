@@ -5,12 +5,12 @@ import { mainnet } from '@reown/appkit/networks';
 // ✅ Ensure the correct project ID
 const projectId = '6ee1f35a236bb1fdb857ed0bfb2d8d2f';
 
-// ✅ Update metadata with the live Fleek deployment URL
+// ✅ Use the correct metadata URL (update to match Fleek deployment)
 const metadata = {
   name: 'DuckVault',
   description: 'Scrooge $DuckVault Presale',
-  url: 'https://narrow-ocean-deep.on-fleek.app/', // Updated to match live deployment
-  icons: ['https://assets.reown.com/reown-profile-pic.png']
+  url: 'https://narrow-ocean-deep.on-fleek.app/', // Updated to match Fleek deployment
+  icons: ['https://narrow-ocean-deep.on-fleek.app/logo.png'] // Update this if you have a real logo
 };
 
 // ✅ Ensure only Ethereum Mainnet is enabled
@@ -20,6 +20,7 @@ export const reownAppKit = createAppKit({
   metadata,
   projectId,
   features: {
-    analytics: true // Optional
+    analytics: true, // Optional
+    walletConnect: true // Ensures WalletConnect functionality
   }
 });
