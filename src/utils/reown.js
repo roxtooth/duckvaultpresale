@@ -1,26 +1,26 @@
-import { createAppKit } from '@reown/appkit';
-import { Ethers5Adapter } from '@reown/appkit-adapter-ethers5';
-import { mainnet } from '@reown/appkit/networks';
+import { createAppKit } from "@reown/appkit";
+import { Ethers5Adapter } from "@reown/appkit-adapter-ethers5";
+import { mainnet } from "@reown/appkit/networks";
 
-// ✅ Ensure the correct project ID
-const projectId = '6ee1f35a236bb1fdb857ed0bfb2d8d2f';
+// ✅ Correct project ID (double-check this on Reown)
+const projectId = "6ee1f35a236bb1fdb857ed0bfb2d8d2f";
 
-// ✅ Use the correct metadata URL (update to match Fleek deployment)
+// ✅ Ensure correct metadata URL
 const metadata = {
-  name: 'DuckVault',
-  description: 'Scrooge $DuckVault Presale',
-  url: 'https://narrow-ocean-deep.on-fleek.app/', // Updated to match Fleek deployment
-  icons: ['https://narrow-ocean-deep.on-fleek.app/logo.png'] // Update this if you have a real logo
+  name: "DuckVault",
+  description: "Scrooge $DuckVault Presale",
+  url: "https://duckvaultpresale.vercel.app", // ✅ Make sure this is correct
+  icons: ["https://duckvaultpresale.vercel.app/logo.png"], // ✅ Ensure this logo exists
 };
 
-// ✅ Ensure only Ethereum Mainnet is enabled
+// ✅ Ensure proper WalletConnect & network setup
 export const reownAppKit = createAppKit({
   adapters: [new Ethers5Adapter()],
-  networks: [mainnet], // ✅ Keeping only mainnet to avoid conflicts
+  networks: [mainnet],
   metadata,
   projectId,
   features: {
-    analytics: true, // Optional
-    walletConnect: true // Ensures WalletConnect functionality
-  }
+    analytics: true, // ✅ Optional - defaults to your Cloud configuration
+    walletConnect: true, // ✅ Fixes "Invalid App Configuration" error
+  },
 });
