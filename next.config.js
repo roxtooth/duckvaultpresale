@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export', // ✅ Forces Next.js to generate static files for Fleek
-  trailingSlash: true, // ✅ Ensures correct URL structure for IPFS hosting
+  output: 'export', // ✅ Forces static export for Fleek
+  distDir: 'out', // ✅ Ensures Fleek deploys the correct directory
+  trailingSlash: true, // ✅ Fixes URL issues with IPFS hosting
   images: {
-    unoptimized: true, // ✅ Fixes Next.js image compatibility issues with IPFS
+    unoptimized: true, // ✅ Ensures images work on IPFS
   },
-  distDir: 'out', // ✅ Ensures Fleek uses the correct output directory
 };
 
 module.exports = nextConfig;
