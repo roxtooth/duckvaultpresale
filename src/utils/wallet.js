@@ -1,13 +1,8 @@
-import { reownAppKit } from './reown';
-import { ethers } from 'ethers';
+import { reownAppKit } from "./reown";
+import { ethers } from "ethers";
 
 export const connectWallet = async () => {
   try {
-    if (!reownAppKit) {
-      console.error("Reown AppKit is not initialized.");
-      return { address: null };
-    }
-
     const walletProvider = await reownAppKit.open();
 
     if (!walletProvider) {
@@ -15,9 +10,7 @@ export const connectWallet = async () => {
       return { address: null };
     }
 
-    // ✅ Ensure WalletConnect is correctly initialized
     const provider = new ethers.providers.Web3Provider(walletProvider, "any");
-
     const signer = provider.getSigner();
     const address = await signer.getAddress();
 

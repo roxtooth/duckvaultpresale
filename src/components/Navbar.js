@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { connectWallet } from "../utils/wallet";
+import { connectWeb3ModalWallet } from "../utils/web3modal";
 
 export default function Navbar() {
   const [walletAddress, setWalletAddress] = useState("");
 
   const handleConnectWallet = async () => {
-    const walletData = await connectWallet();
+    const walletData = await connectWeb3ModalWallet();
     if (walletData && walletData.address) {
       setWalletAddress(walletData.address);
     } else {
