@@ -1,5 +1,5 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { injected, walletConnect, coinbaseWallet } from 'wagmi/connectors';
+import { metaMask, walletConnect, coinbaseWallet } from 'wagmi/connectors';
 
 export default function WalletButton() {
   const { address, isConnected } = useAccount();
@@ -9,7 +9,7 @@ export default function WalletButton() {
   const connectWallet = (walletType) => {
     switch (walletType) {
       case 'metaMask':
-        connect({ connector: injected() }); // MetaMask
+        connect({ connector: metaMask() }); // MetaMask
         break;
       case 'walletConnect':
         connect({ connector: walletConnect() }); // WalletConnect

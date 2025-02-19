@@ -1,6 +1,7 @@
-import { createConfig, http } from 'wagmi';
+import { createConfig } from 'wagmi';
+import { http } from 'viem';
 import { mainnet, sepolia } from 'wagmi/chains';
-import { injected, walletConnect, coinbaseWallet } from 'wagmi/connectors';
+import { metaMask, walletConnect, coinbaseWallet } from 'wagmi/connectors';
 
 export const config = createConfig({
   chains: [mainnet, sepolia], // Add your desired chains
@@ -9,7 +10,7 @@ export const config = createConfig({
     [sepolia.id]: http(`https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`), // Use Infura for testnet
   },
   connectors: [
-    injected(), // MetaMask, etc.
+    metaMask(), // MetaMask
     walletConnect({
       projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, // WalletConnect Project ID
     }),

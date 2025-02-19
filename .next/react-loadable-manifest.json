@@ -1,30 +1,64 @@
 {
-  "../../node_modules/@wagmi/connectors/dist/coinbaseWallet.js -> @coinbase/wallet-sdk": {
-    "id": 5811,
+  "../node_modules/@wagmi/connectors/dist/esm/coinbaseWallet.js -> @coinbase/wallet-sdk": {
+    "id": "../node_modules/@wagmi/connectors/dist/esm/coinbaseWallet.js -> @coinbase/wallet-sdk",
     "files": [
-      "static/chunks/194.b16c38e394b11181.js",
-      "static/chunks/811.3eeba7595a8c3613.js",
-      "static/chunks/726.38f6386edd4d0f96.js"
+      "static/chunks/node_modules_coinbase_wallet-sdk_dist_index_js.js"
     ]
   },
-  "../../node_modules/@wagmi/connectors/dist/walletConnect.js -> @walletconnect/ethereum-provider": {
-    "id": 1347,
+  "../node_modules/@wagmi/connectors/dist/esm/coinbaseWallet.js -> cbw-sdk": {
+    "id": "../node_modules/@wagmi/connectors/dist/esm/coinbaseWallet.js -> cbw-sdk",
     "files": [
-      "static/chunks/194.b16c38e394b11181.js",
-      "static/chunks/347.d61c9f6e01ade574.js",
-      "static/chunks/883.a6a890ce5b31882f.js"
+      "static/chunks/node_modules_cbw-sdk_dist_index_js.js"
     ]
   },
-  "../../node_modules/@walletconnect/ethereum-provider/dist/index.es.js -> @walletconnect/modal": {
-    "id": 9343,
+  "../node_modules/@wagmi/connectors/dist/esm/metaMask.js -> @metamask/sdk": {
+    "id": "../node_modules/@wagmi/connectors/dist/esm/metaMask.js -> @metamask/sdk",
     "files": [
-      "static/chunks/343.a766180998644e9c.js"
+      "static/chunks/node_modules_metamask_sdk_dist_browser_es_metamask-sdk_js.js"
     ]
   },
-  "../../node_modules/@walletconnect/modal/dist/index.js -> @walletconnect/modal-ui": {
-    "id": 1391,
+  "../node_modules/@wagmi/connectors/dist/esm/safe.js -> @safe-global/safe-apps-provider": {
+    "id": "../node_modules/@wagmi/connectors/dist/esm/safe.js -> @safe-global/safe-apps-provider",
     "files": [
-      "static/chunks/391.9fd0b7339c4ad6c4.js"
+      "static/chunks/node_modules_safe-global_safe-apps-provider_dist_index_js.js"
     ]
+  },
+  "../node_modules/@wagmi/connectors/dist/esm/safe.js -> @safe-global/safe-apps-sdk": {
+    "id": "../node_modules/@wagmi/connectors/dist/esm/safe.js -> @safe-global/safe-apps-sdk",
+    "files": [
+      "static/chunks/node_modules_safe-global_safe-apps-sdk_dist_esm_index_js.js"
+    ]
+  },
+  "../node_modules/@wagmi/connectors/dist/esm/walletConnect.js -> @walletconnect/ethereum-provider": {
+    "id": "../node_modules/@wagmi/connectors/dist/esm/walletConnect.js -> @walletconnect/ethereum-provider",
+    "files": [
+      "static/chunks/node_modules_walletconnect_ethereum-provider_dist_index_es_js.js"
+    ]
+  },
+  "../node_modules/@walletconnect/ethereum-provider/dist/index.es.js -> @walletconnect/modal": {
+    "id": "../node_modules/@walletconnect/ethereum-provider/dist/index.es.js -> @walletconnect/modal",
+    "files": [
+      "static/chunks/node_modules_walletconnect_modal_dist_index_js.js"
+    ]
+  },
+  "../node_modules/@walletconnect/modal/dist/index.js -> @walletconnect/modal-ui": {
+    "id": "../node_modules/@walletconnect/modal/dist/index.js -> @walletconnect/modal-ui",
+    "files": [
+      "static/chunks/node_modules_walletconnect_modal-ui_dist_index_js.js"
+    ]
+  },
+  "../node_modules/viem/_esm/actions/public/call.js -> ../../utils/ccip.js": {
+    "id": "../node_modules/viem/_esm/actions/public/call.js -> ../../utils/ccip.js",
+    "files": []
+  },
+  "../node_modules/viem/_esm/utils/rpc/webSocket.js -> isows": {
+    "id": "../node_modules/viem/_esm/utils/rpc/webSocket.js -> isows",
+    "files": [
+      "static/chunks/node_modules_isows__esm_native_js.js"
+    ]
+  },
+  "../node_modules/viem/_esm/utils/signature/recoverPublicKey.js -> @noble/curves/secp256k1": {
+    "id": "../node_modules/viem/_esm/utils/signature/recoverPublicKey.js -> @noble/curves/secp256k1",
+    "files": []
   }
 }
