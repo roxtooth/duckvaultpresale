@@ -1,25 +1,21 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { injected, walletConnect, coinbaseWallet } from 'wagmi/connectors';
 
 export default function WalletButton() {
   const { address, isConnected } = useAccount();
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
+  const { connect } = useConnect();
   const { disconnect } = useDisconnect();
 
   const connectWallet = (walletType) => {
     switch (walletType) {
       case 'metaMask':
-        connect({ connector: new InjectedConnector() });
+        connect({ connector: injected() }); // MetaMask
         break;
       case 'walletConnect':
-        connect({ connector: new WalletConnectConnector({ options: { qrcode: true } }) });
+        connect({ connector: walletConnect() }); // WalletConnect
         break;
       case 'coinbaseWallet':
-        connect({ connector: new CoinbaseWalletConnector({ options: { appName: 'Scrooge $DuckVault' } }) });
+        connect({ connector: coinbaseWallet() }); // Coinbase Wallet
         break;
       default:
         break;
