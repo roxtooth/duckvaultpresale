@@ -1,4 +1,4 @@
-import { useAccount, useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { useAccount, useContractRead, usePrepareContractWrite, useContractWrite } from 'wagmi';
 import PresaleABI from '../contracts/Presale.json';
 
 export default function PresaleInfo() {
