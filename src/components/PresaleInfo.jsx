@@ -19,7 +19,7 @@ export default function PresaleInfo() {
   });
 
   // Calculate remaining tokens
-  const totalPresaleTokens = 40000000; // 40 million tokens
+  const totalPresaleTokens = 90000000 * 10 ** 18; // 90M tokens
   const remainingTokens = totalPresaleTokens - (totalTokensSold || 0);
 
   // Token price based on stage
@@ -42,7 +42,7 @@ export default function PresaleInfo() {
       <h2 className="text-2xl font-bold mb-4">Presale Information</h2>
       <p>Current Stage: {currentStage + 1}</p>
       <p>Token Price: {currentTokenPrice} ETH</p>
-      <p>Remaining Tokens: {remainingTokens}</p>
+      <p>Remaining Tokens: {remainingTokens.toString()}</p>
       <button
         onClick={() => buyTokens?.()}
         className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mt-4"
