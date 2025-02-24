@@ -8,10 +8,10 @@ import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// Retrieve your WalletConnect project ID from environment variables (assert it's defined).
-const projectId: string = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!;
+// Retrieve your Reown project ID from environment variables.
+const projectId: string = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID!;
 if (!projectId) {
-  throw new Error("NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID is not defined in your .env.local file");
+  throw new Error("NEXT_PUBLIC_REOWN_PROJECT_ID is not defined in your .env.local file");
 }
 
 // Optional metadata for your dApp.
@@ -19,11 +19,10 @@ const metadata = {
   name: "DuckVaultPresale",
   description: "DuckVault Presale dApp",
   url: "https://duckvaultpresale.example.com",
-  icons: ["https://duckvaultpresale.example.com/logo.png"],
+  icons: ["https://duckvaultpresale.example.com/logo.png"]
 };
 
-// Define the networks.
-// We cast the networks array as 'any' since the expected type (e.g. AppKitNetwork) isn't exported.
+// Define the networks. Casting as any to satisfy the expected tuple type.
 const networks = [mainnet, arbitrum] as any;
 
 // Create a QueryClient for React Query.
@@ -49,8 +48,8 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
         metadata,
         projectId,
         features: {
-          analytics: false, // Disable analytics for now
-        },
+          analytics: false // Disable analytics for now
+        }
       });
       setInitialized(true);
     })();
