@@ -4,6 +4,18 @@
 import { useState, useEffect } from "react";
 import { BrowserProvider, parseEther, Contract } from "ethers";
 
+// Define a minimal EIP-1193 provider interface
+interface Eip1193Provider {
+  request(args: { method: string; params?: unknown[] }): Promise<unknown>;
+}
+
+// Declare it on the global Window interface
+declare global {
+  interface Window {
+    ethereum?: Eip1193Provider;
+  }
+}
+
 // Your contract's address
 const CONTRACT_ADDRESS = "0xeE0CfF5B1a084A51ff6d0d23564640e0397e6Ee1";
 
@@ -58,25 +70,24 @@ const CONTRACT_ABI = [
   { "stateMutability": "payable", "type": "receive" }
 ];
 
-const PRESALE_START_TIME = new Date("2025-03-08T10:00:00Z").getTime(); // March 8, 2025 4 AM CST (10:00 AM UTC)
-const STAGE_DURATION = 25 * 24 * 60 * 60 * 1000; // 25 days in milliseconds
+const PRESALE_START_TIME = new Date("2025-03-08T10:00:00Z").getTime();
+const STAGE_DURATION = 25 * 24 * 60 * 60 * 1000;
 const STAGE_THRESHOLDS = [15_000_000, 30_000_000, 45_000_000, 60_000_000];
-const STAGE_PRICES = [0.000025, 0.00003125, 0.0000375, 0.00004375]; // ETH per token price
-const STAGE_MIN_PURCHASES = [0.01, 0.0125, 0.015, 0.0175]; // Minimum ETH per purchase per stage
+const STAGE_PRICES = [0.000025, 0.00003125, 0.0000375, 0.00004375];
+const STAGE_MIN_PURCHASES = [0.01, 0.0125, 0.015, 0.0175];
 
 export default function PresaleSection() {
   const [totalSold, setTotalSold] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const [timeLeft, setTimeLeft] = useState<number>(0); // in milliseconds
+  const [timeLeft, setTimeLeft] = useState<number>(0);
   const [tokenInput, setTokenInput] = useState<string>("");
   const [ethInput, setEthInput] = useState<string>("");
 
-  // Fetch presale data from contract: totalTokensSold
   useEffect(() => {
     const fetchPresaleData = async () => {
       try {
         if (typeof window.ethereum !== "undefined") {
-          const provider = new BrowserProvider(window.ethereum as any);
+          const provider = new BrowserProvider(window.ethereum as Eip1193Provider);
           const contract = new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
           const sold = await contract.totalTokensSold();
           setTotalSold(Number(sold.toString()));
@@ -91,11 +102,10 @@ export default function PresaleSection() {
     };
 
     fetchPresaleData();
-    const interval = setInterval(fetchPresaleData, 15000); // poll every 15 seconds
+    const interval = setInterval(fetchPresaleData, 15000);
     return () => clearInterval(interval);
   }, []);
 
-  // Update countdown timer every second
   useEffect(() => {
     const timer = setInterval(() => {
       const now = Date.now();
@@ -109,7 +119,6 @@ export default function PresaleSection() {
     return () => clearInterval(timer);
   }, []);
 
-  // Determine the current stage based on tokens sold and time elapsed
   let timeStage = Math.floor((Date.now() - PRESALE_START_TIME) / STAGE_DURATION);
   if (Date.now() < PRESALE_START_TIME) timeStage = 0;
 
@@ -126,7 +135,6 @@ export default function PresaleSection() {
   const currentMinPurchase = STAGE_MIN_PURCHASES[stageIndex];
   const tokensLeftInStage = Math.max(STAGE_THRESHOLDS[stageIndex] - totalSold, 0);
 
-  // Handle user input for tokens and ETH
   const handleTokenInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const tokens = e.target.value;
     setTokenInput(tokens);
@@ -159,7 +167,7 @@ export default function PresaleSection() {
         return;
       }
       if (typeof window.ethereum !== "undefined") {
-        const provider = new BrowserProvider(window.ethereum as any);
+        const provider = new BrowserProvider(window.ethereum as Eip1193Provider);
         await provider.send("eth_requestAccounts", []);
         const signer = await provider.getSigner();
         const contract = new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
@@ -176,7 +184,6 @@ export default function PresaleSection() {
     }
   };
 
-  // Format timeLeft as "dd d hh h mm m ss s"
   const formatTime = (ms: number) => {
     const totalSeconds = Math.floor(ms / 1000);
     const days = Math.floor(totalSeconds / (24 * 3600));

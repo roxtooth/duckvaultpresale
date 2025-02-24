@@ -22,7 +22,8 @@ const metadata = {
   icons: ["https://duckvaultpresale.example.com/logo.png"]
 };
 
-// Define the networks. Casting as any to satisfy the expected tuple type.
+// Define the networks.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const networks = [mainnet, arbitrum] as any;
 
 // Create a QueryClient for React Query.
