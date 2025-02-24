@@ -1,21 +1,85 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
+/* Light Mode - Flashy Gold Background and Dark Text */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FFD700; /* bright gold */
+  --foreground: #171717; /* dark text */
+  --sparkle-color: #FFF5B2; /* soft, sparkling gold */
 }
 
+/* Dark Mode - Dark Background and Flashy Gold Text */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #171717; /* dark background */
+    --foreground: #FFD700; /* bright gold text */
+    --sparkle-color: #FFF5B2;
   }
 }
 
+/* Global body styling with a gold gradient and shimmer animation */
 body {
+  background: linear-gradient(135deg, var(--background), #FFC107);
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
+  animation: shimmer 3s infinite;
+}
+
+/* Shimmer animation keyframes */
+@keyframes shimmer {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.2);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+/* Sparkle effect for headings or any element with the .sparkle class */
+.sparkle {
+  position: relative;
+  color: var(--foreground);
+}
+
+.sparkle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--sparkle-color) 20%, transparent 80%);
+  opacity: 0.7;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* Sparkle animation keyframes */
+@keyframes sparkle {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+/* Custom styles for Reown AppKit modal positioning on mobile devices */
+@media (max-width: 640px) {
+  /* Adjust these selectors based on the actual modal container class */
+  .reown-modal,
+  .w3m-modal {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
 }
