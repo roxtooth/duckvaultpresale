@@ -1,15 +1,15 @@
 // src/context/Web3Context.tsx
 "use client";
 
-import { createContext, useContext } from "react";
-import { createAppKit, useAppKit } from "@reown/appkit/react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { createAppKit } from "@reown/appkit/react";
 import { mainnet, arbitrum } from "@reown/appkit/networks";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// Retrieve your WalletConnect project ID from environment variables.
-const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
+// Retrieve your WalletConnect project ID from environment variables (assert it's defined).
+const projectId: string = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!;
 if (!projectId) {
   throw new Error("NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID is not defined in your .env.local file");
 }
@@ -23,7 +23,8 @@ const metadata = {
 };
 
 // Define the networks.
-const networks = [mainnet, arbitrum];
+// We cast the networks array as 'any' since the expected type (e.g. AppKitNetwork) isn't exported.
+const networks = [mainnet, arbitrum] as any;
 
 // Create a QueryClient for React Query.
 const queryClient = new QueryClient();
@@ -31,20 +32,34 @@ const queryClient = new QueryClient();
 // Create the Wagmi adapter.
 const wagmiAdapter = new WagmiAdapter({ networks, projectId });
 
-// Call createAppKit using top-level await.
-// Note: If you encounter hydration issues with top-level await in a client component,
-// consider moving this call to a separate module that initializes the app kit before rendering.
-await createAppKit({
-  adapters: [wagmiAdapter],
-  networks,
-  metadata,
-  projectId,
-  features: {
-    analytics: false, // Disable analytics for now
-  },
-});
+const Web3Context = createContext(null);
+
+export function useWeb3() {
+  return useContext(Web3Context);
+}
 
 export function Web3Provider({ children }: { children: React.ReactNode }) {
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await createAppKit({
+        adapters: [wagmiAdapter],
+        networks,
+        metadata,
+        projectId,
+        features: {
+          analytics: false, // Disable analytics for now
+        },
+      });
+      setInitialized(true);
+    })();
+  }, []);
+
+  if (!initialized) {
+    return <p>Initializing AppKit...</p>;
+  }
+
   return (
     <WagmiProvider config={wagmiAdapter.wagmiConfig}>
       <QueryClientProvider client={queryClient}>
@@ -54,8 +69,4 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
   );
 }
 
-const Web3Context = createContext(null);
-export function useWeb3() {
-  return useContext(Web3Context);
-}
 export default Web3Context;

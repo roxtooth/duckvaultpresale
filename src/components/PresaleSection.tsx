@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { BrowserProvider, Eip1193Provider, parseEther, Contract } from "ethers";
+import { BrowserProvider, parseEther, Contract } from "ethers";
 
 // Your contract's address
 const CONTRACT_ADDRESS = "0xeE0CfF5B1a084A51ff6d0d23564640e0397e6Ee1";
@@ -76,10 +76,10 @@ export default function PresaleSection() {
     const fetchPresaleData = async () => {
       try {
         if (typeof window.ethereum !== "undefined") {
-          const provider = new BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+          const provider = new BrowserProvider(window.ethereum as any);
           const contract = new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
           const sold = await contract.totalTokensSold();
-          setTotalSold(Number(sold.toBigInt()));
+          setTotalSold(Number(sold.toString()));
         } else {
           console.error("No Ethereum provider found.");
         }
@@ -159,7 +159,7 @@ export default function PresaleSection() {
         return;
       }
       if (typeof window.ethereum !== "undefined") {
-        const provider = new BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+        const provider = new BrowserProvider(window.ethereum as any);
         await provider.send("eth_requestAccounts", []);
         const signer = await provider.getSigner();
         const contract = new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
