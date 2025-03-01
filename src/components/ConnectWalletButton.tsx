@@ -1,6 +1,21 @@
+// src/components/ConnectWalletButton.tsx
 import { useAppKit } from "@reown/appkit/react";
+import { isMobile } from "react-device-detect";
 
 export default function ConnectWalletButton() {
   const { open } = useAppKit();
-  return <button onClick={() => open()}>Connect Wallet</button>;
+
+  const handleConnect = () => {
+    if (isMobile) {
+      console.log("Mobile device detected.");
+      // You could add mobile-specific behavior here if needed.
+    }
+    open();
+  };
+
+  return (
+    <button onClick={handleConnect} className="px-4 py-2 bg-yellow-500 text-black rounded hover:bg-yellow-400 transition">
+      Connect Wallet
+    </button>
+  );
 }

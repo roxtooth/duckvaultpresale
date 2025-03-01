@@ -28,15 +28,9 @@ body {
 
 /* Shimmer animation keyframes */
 @keyframes shimmer {
-  0% {
-    filter: brightness(1);
-  }
-  50% {
-    filter: brightness(1.2);
-  }
-  100% {
-    filter: brightness(1);
-  }
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+  100% { filter: brightness(1); }
 }
 
 /* Sparkle effect for headings or any element with the .sparkle class */
@@ -59,27 +53,34 @@ body {
 
 /* Sparkle animation keyframes */
 @keyframes sparkle {
-  0% {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-  100% {
-    opacity: 0.7;
-    transform: scale(1);
-  }
+  0% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.7; transform: scale(1); }
 }
 
-/* Custom styles for Reown AppKit modal positioning on mobile devices */
+/* Mobile override for Reown AppKit (or similar) modal containers */
 @media (max-width: 640px) {
-  /* Adjust these selectors based on the actual modal container class */
+  /* Adjust these selectors after inspecting your modal element */
   .reown-modal,
-  .w3m-modal {
+  .reown-modal__container,
+  .w3m-modal,
+  .w3m-modal__container {
+    position: fixed !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
+    max-width: 90vw !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    z-index: 9999 !important;
+  }
+  .reown-modal__backdrop,
+  .w3m-modal__backdrop {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 9998 !important;
   }
 }
