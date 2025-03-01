@@ -6,7 +6,6 @@ import { BrowserProvider, parseEther, Contract } from "ethers";
 
 /**
  * Minimal EIP‑1193 provider interface.
- * (Do not extend the global Window interface here—use inline casts instead.)
  */
 interface Eip1193Provider {
   request(args: { method: string; params?: unknown[] }): Promise<unknown>;
@@ -15,7 +14,7 @@ interface Eip1193Provider {
 // Your contract's address
 const CONTRACT_ADDRESS = "0xeE0CfF5B1a084A51ff6d0d23564640e0397e6Ee1";
 
-// Full ABI – ensure this array is complete with your contract's ABI
+// Full ABI – be sure to include your entire ABI here.
 const CONTRACT_ABI = [
   {
     "inputs": [

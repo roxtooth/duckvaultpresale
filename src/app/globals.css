@@ -60,7 +60,14 @@ body {
 
 /* Mobile override for Reown AppKit (or similar) modal containers */
 @media (max-width: 640px) {
-  /* Adjust these selectors after inspecting your modal element */
+  /* 
+    Use attribute selectors if the modal uses data attributes.
+    Inspect your modal in the mobile browser or in device emulation to verify the correct selectors.
+  */
+  [data-reown-modal],
+  [data-reown-modal-container],
+  [data-w3m-modal],
+  [data-w3m-modal-container],
   .reown-modal,
   .reown-modal__container,
   .w3m-modal,
@@ -74,6 +81,8 @@ body {
     overflow-y: auto !important;
     z-index: 9999 !important;
   }
+  [data-reown-modal-backdrop],
+  [data-w3m-modal-backdrop],
   .reown-modal__backdrop,
   .w3m-modal__backdrop {
     position: fixed !important;
