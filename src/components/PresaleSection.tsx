@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import { BrowserProvider, parseEther, Contract } from "ethers";
 
 /**
- * Minimal EIP‑1193 provider interface
- * Only includes the `request` method, which ethers v6 checks for.
+ * Minimal EIP‑1193 provider interface.
+ * (Do not extend the global Window interface here—use inline casts instead.)
  */
 interface Eip1193Provider {
   request(args: { method: string; params?: unknown[] }): Promise<unknown>;
@@ -15,10 +15,7 @@ interface Eip1193Provider {
 // Your contract's address
 const CONTRACT_ADDRESS = "0xeE0CfF5B1a084A51ff6d0d23564640e0397e6Ee1";
 
-/** 
- * Full ABI (ensure this is the entire ABI from your contract).
- * If your contract has additional entries, please include them.
- */
+// Full ABI – ensure this array is complete with your contract's ABI
 const CONTRACT_ABI = [
   {
     "inputs": [
@@ -46,12 +43,36 @@ const CONTRACT_ABI = [
     "name": "ERC20InsufficientBalance",
     "type": "error"
   },
-  { "inputs": [{ "internalType": "address", "name": "approver", "type": "address" }], "name": "ERC20InvalidApprover", "type": "error" },
-  { "inputs": [{ "internalType": "address", "name": "receiver", "type": "address" }], "name": "ERC20InvalidReceiver", "type": "error" },
-  { "inputs": [{ "internalType": "address", "name": "sender", "type": "address" }], "name": "ERC20InvalidSender", "type": "error" },
-  { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }], "name": "ERC20InvalidSpender", "type": "error" },
-  { "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }], "name": "OwnableInvalidOwner", "type": "error" },
-  { "inputs": [{ "internalType": "address", "name": "account", "type": "address" }], "name": "OwnableUnauthorizedAccount", "type": "error" },
+  {
+    "inputs": [{ "internalType": "address", "name": "approver", "type": "address" }],
+    "name": "ERC20InvalidApprover",
+    "type": "error"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "receiver", "type": "address" }],
+    "name": "ERC20InvalidReceiver",
+    "type": "error"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "sender", "type": "address" }],
+    "name": "ERC20InvalidSender",
+    "type": "error"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }],
+    "name": "ERC20InvalidSpender",
+    "type": "error"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }],
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -310,10 +331,8 @@ export default function PresaleSection() {
   useEffect(() => {
     const fetchPresaleData = async () => {
       try {
-        // Cast window.ethereum to unknown then to Eip1193Provider
-        const ethereumProvider = window.ethereum as unknown as Eip1193Provider | undefined;
-        if (ethereumProvider) {
-          const provider = new BrowserProvider(ethereumProvider);
+        if (window.ethereum) {
+          const provider = new BrowserProvider(window.ethereum as unknown as Eip1193Provider);
           const contract = new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
           const sold = await contract.totalTokensSold();
           setTotalSold(Number(sold.toString()));
@@ -345,7 +364,6 @@ export default function PresaleSection() {
     return () => clearInterval(timer);
   }, []);
 
-  // Determine the current stage by time and total tokens sold
   let timeStage = Math.floor((Date.now() - PRESALE_START_TIME) / STAGE_DURATION);
   if (Date.now() < PRESALE_START_TIME) timeStage = 0;
 
@@ -397,9 +415,8 @@ export default function PresaleSection() {
         alert(`Minimum purchase for Stage ${stageIndex + 1} is ${currentMinPurchase} ETH.`);
         return;
       }
-      const ethereumProvider = window.ethereum as unknown as Eip1193Provider | undefined;
-      if (ethereumProvider) {
-        const provider = new BrowserProvider(ethereumProvider);
+      if (window.ethereum) {
+        const provider = new BrowserProvider(window.ethereum as unknown as Eip1193Provider);
         await provider.send("eth_requestAccounts", []);
         const signer = await provider.getSigner();
         const contract = new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
