@@ -22,9 +22,8 @@ const metadata = {
   icons: ["https://duckvaultpresale.example.com/logo.png"]
 };
 
-// Define the networks.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const networks = [mainnet, arbitrum] as any;
+// Define the networks as a tuple using the types of mainnet and arbitrum.
+const networks: [typeof mainnet, typeof arbitrum] = [mainnet, arbitrum];
 
 // Create a QueryClient for React Query.
 const queryClient = new QueryClient();
@@ -32,7 +31,7 @@ const queryClient = new QueryClient();
 // Create the Wagmi adapter.
 const wagmiAdapter = new WagmiAdapter({ networks, projectId });
 
-const Web3Context = createContext(null);
+const Web3Context = createContext<null>(null);
 
 export function useWeb3() {
   return useContext(Web3Context);
