@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Web3Provider } from "@/context/Web3Context";
+import MobileModalOverrides from "@/components/MobileModalOverrides";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,7 +33,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Web3Provider>{children}</Web3Provider>
+        <Web3Provider>
+          <MobileModalOverrides />
+          {children}
+        </Web3Provider>
       </body>
     </html>
   );
