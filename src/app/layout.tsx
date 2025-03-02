@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Web3Provider } from "@/context/Web3Context";
-import MobileModalCentering from "@/components/MobileModalCentering"; // Updated import name
+import MobileModalCentering from "@/components/MobileModalCentering"; // Ensure this path and name match
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,11 +25,7 @@ export const viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
