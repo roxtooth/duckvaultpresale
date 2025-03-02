@@ -5,12 +5,13 @@ import { useEffect } from "react";
 
 export default function MobileModalOverrides() {
   useEffect(() => {
-    // Check if the viewport is small (mobile)
+    // Only run on mobile devices (viewport width 640px or less)
     if (window.innerWidth <= 640) {
       const style = document.createElement("style");
       style.id = "mobile-modal-overrides";
       style.innerHTML = `
-        /* Override modal container styles on mobile */
+        /* Target modal containers that Reown AppKit might use.
+           Adjust these selectors after inspecting your modal’s HTML structure on mobile. */
         [data-reown-modal],
         [data-reown-modal-container],
         [data-w3m-modal],
@@ -23,12 +24,12 @@ export default function MobileModalOverrides() {
           top: 50% !important;
           left: 50% !important;
           transform: translate(-50%, -50%) !important;
-          width: 90vw !important;
+          width: 95vw !important;
           max-height: 90vh !important;
           overflow-y: auto !important;
           z-index: 10000 !important;
         }
-        /* Override modal backdrop styles on mobile */
+        /* Ensure the backdrop covers the full viewport */
         [data-reown-modal-backdrop],
         [data-w3m-modal-backdrop],
         .reown-modal__backdrop,
@@ -44,13 +45,12 @@ export default function MobileModalOverrides() {
       `;
       document.head.appendChild(style);
       return () => {
-        const existingStyle = document.getElementById("mobile-modal-overrides");
-        if (existingStyle) {
-          document.head.removeChild(existingStyle);
+        const existing = document.getElementById("mobile-modal-overrides");
+        if (existing) {
+          document.head.removeChild(existing);
         }
       };
     }
   }, []);
-
-  return null; // This component doesn't render anything visible.
+  return null;
 }
