@@ -8,13 +8,16 @@ export default function ConnectWalletButton() {
   const handleConnect = () => {
     if (isMobile) {
       console.log("Mobile device detected.");
-      // You could add mobile-specific behavior here if needed.
+      // Optionally, show a mobile-specific message or adjust behavior
     }
     open();
   };
 
   return (
-    <button onClick={handleConnect} className="px-4 py-2 bg-yellow-500 text-black rounded hover:bg-yellow-400 transition">
+    <button 
+      onClick={handleConnect} 
+      className="px-4 py-2 bg-yellow-500 text-black rounded hover:bg-yellow-400 transition"
+    >
       Connect Wallet
     </button>
   );
