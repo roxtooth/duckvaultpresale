@@ -9,6 +9,7 @@ export default function ConnectWalletButton() {
     if (isMobile) {
       console.log("Mobile device detected. Attempting to open WalletConnect modal.");
     }
+    document.body.classList.add("modal-open");
     open();
   };
 

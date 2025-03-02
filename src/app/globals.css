@@ -28,9 +28,15 @@ body {
 
 /* Shimmer animation keyframes */
 @keyframes shimmer {
-  0% { filter: brightness(1); }
-  50% { filter: brightness(1.2); }
-  100% { filter: brightness(1); }
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.2);
+  }
+  100% {
+    filter: brightness(1);
+  }
 }
 
 /* Sparkle effect for headings or any element with the .sparkle class */
@@ -53,41 +59,16 @@ body {
 
 /* Sparkle animation keyframes */
 @keyframes sparkle {
-  0% { opacity: 0.7; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 0.7; transform: scale(1); }
-}
-
-/* Mobile override for Reown AppKit modal containers */
-@media (max-width: 640px) {
-  /* Use attribute selectors as well as class selectors to capture the modal container */
-  [data-reown-modal],
-  [data-reown-modal-container],
-  [data-w3m-modal],
-  [data-w3m-modal-container],
-  .reown-modal,
-  .reown-modal__container,
-  .w3m-modal,
-  .w3m-modal__container {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 90vw !important;
-    max-height: 90vh !important;
-    overflow-y: auto !important;
-    z-index: 10000 !important;
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
   }
-  [data-reown-modal-backdrop],
-  [data-w3m-modal-backdrop],
-  .reown-modal__backdrop,
-  .w3m-modal__backdrop {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: rgba(0, 0, 0, 0.6) !important;
-    z-index: 9999 !important;
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
   }
 }
