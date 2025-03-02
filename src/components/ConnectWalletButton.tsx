@@ -7,8 +7,7 @@ export default function ConnectWalletButton() {
 
   const handleConnect = () => {
     if (isMobile) {
-      console.log("Mobile device detected.");
-      // Optionally, show a mobile-specific message or adjust behavior
+      console.log("Mobile device detected. Attempting to open WalletConnect modal.");
     }
     open();
   };

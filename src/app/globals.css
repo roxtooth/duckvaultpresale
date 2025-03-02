@@ -60,11 +60,7 @@ body {
 
 /* Mobile override for Reown AppKit modal containers */
 @media (max-width: 640px) {
-  /**
-   * Use attribute-based selectors if the modal uses data attributes.
-   * Inspect the modal on your phone to see the actual container's class or data attributes,
-   * then adjust these selectors accordingly.
-   */
+  /* Use attribute selectors as well as class selectors to capture the modal container */
   [data-reown-modal],
   [data-reown-modal-container],
   [data-w3m-modal],
