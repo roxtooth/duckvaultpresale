@@ -60,15 +60,19 @@ body {
 
 /* Mobile override for Reown AppKit modal containers */
 @media (max-width: 640px) {
-  /* Target both class-based and attribute-based selectors */
-  .reown-modal,
-  .reown-modal__container,
-  .w3m-modal,
-  .w3m-modal__container,
+  /**
+   * Use attribute-based selectors if the modal uses data attributes.
+   * Inspect the modal on your phone to see the actual container's class or data attributes,
+   * then adjust these selectors accordingly.
+   */
   [data-reown-modal],
   [data-reown-modal-container],
   [data-w3m-modal],
-  [data-w3m-modal-container] {
+  [data-w3m-modal-container],
+  .reown-modal,
+  .reown-modal__container,
+  .w3m-modal,
+  .w3m-modal__container {
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
