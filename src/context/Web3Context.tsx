@@ -49,11 +49,6 @@ export function Web3Provider({ children }: { children: React.ReactNode }) {
         projectId,
         features: {
           analytics: false // Disable analytics for now
-        },
-        // Mobile deep linking configuration – update if your version supports it.
-        mobile: {
-          deepLinking: true,
-          supportedWallets: ["metamask", "trust", "rainbow", "coinbase"]
         }
       });
       setInitialized(true);
